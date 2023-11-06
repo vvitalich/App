@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User_info</title>
+</head>
+<body>
+
+
+            <p>{{ user.name }} ({{ user.email }}) </p>
+
+            <p>{{ token.token }}</p>
+
+            {% if not user.email_verified %}
+            <p>
+                <form id="verifyTokenForm" method="POST" action="/user_info_token/{{ token.token }}">
+                <!-- Скрытое поле для передачи токена -->
+                <input type="hidden" name="token" value="{{ token.token }}">
+                <button type="submit">Подтвердить почту</button>
+                </form>
+            </p>
+                <p>{{ token.expiry_timestamp }}</p>
+                <p>{{ left_to_live[0] }}</p>
+                {% if left_to_live[1] != None %}
+                    <p>Еще актуален {{ left_to_live[1] }}</p>
+                {% endif %}
+
+            {% else %}
+
+                <p>Почта подтверждена</p>
+            {% endif %}
+</body>
+</html>
